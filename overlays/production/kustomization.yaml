@@ -15,7 +15,7 @@ resources:
   - seed-job.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/user-service
     newTag: v0.9.4
   - name: ghcr.io/tim275/drova/trip-service
