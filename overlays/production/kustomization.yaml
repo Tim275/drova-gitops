@@ -12,19 +12,20 @@ resources:
   - sealed-secrets/sealed-secret-pg-payments-creds.yaml
   - sealed-secrets/sealed-secret-pg-drivers-creds.yaml
   - sealed-secrets/sealed-secret-redis.yaml
+  - seed-job.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/user-service
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/trip-service
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/driver-service
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/payment-service
-    newTag: v0.9.4
+    newTag: v0.9.5
   - name: ghcr.io/tim275/drova/chat-service
-    newTag: v0.9.4
+    newTag: v0.9.5
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova

@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: drova-seed-users
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: seed
+          image: postgres:16-alpine
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              psql "$DB_URL" <<'ENDSQL'
+              INSERT INTO users (email, password_hash, role, is_activated, display_name, phone)
+              VALUES
+                ('rider@drova.local',
+                 '$2b$12$HlVWVw1rpO78kCRZ3IUU2.ubLeYQmd4mdo8wniTMZ3RTiZ69Pkrxq',
+                 'rider', true, 'Max Rider', '+49 123 4567890'),
+                ('driver@drova.local',
+                 '$2b$12$ZxwjgkAMOV8/9l2dG3vsquUGGzN7iKsTDXsngq4xnYSc36fA8Mcy.',
+                 'driver', true, 'Stefan Fahrer', '+49 987 6543210')
+              ON CONFLICT (email) DO NOTHING;
+              ENDSQL
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drova-pg-users-creds
+                  key: DB_URL
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
