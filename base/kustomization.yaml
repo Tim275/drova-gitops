@@ -4,6 +4,7 @@ resources:
   - redis-config.yaml
   - redis.yaml
   - postgres-cluster.yaml
+  - kafka.yaml
   - services/api-gateway.yaml
   - services/user-service.yaml
   - services/trip-service.yaml
