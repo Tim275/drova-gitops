@@ -14,18 +14,6 @@ spec:
       labels:
         app: driver-service
     spec:
-      initContainers:
-        - name: migrate
-          image: ghcr.io/tim275/drova/driver-service:latest
-          command: ["/app/driver-service", "migrate"]
-          env:
-            - name: DB_URL
-              valueFrom:
-                secretKeyRef:
-                  name: drova-pg-drivers-creds
-                  key: DB_URL
-            - name: MIGRATIONS_PATH
-              value: "migrations"
       containers:
         - name: driver-service
           image: ghcr.io/tim275/drova/driver-service:latest

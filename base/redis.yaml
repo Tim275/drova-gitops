@@ -5,7 +5,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
   name: redis-drova
 spec:
-  clusterSize: 3
+  clusterSize: 2
   podSecurityContext:
     runAsUser: 1000
     fsGroup: 1000

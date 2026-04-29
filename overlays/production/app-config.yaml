@@ -19,7 +19,7 @@ data:
 
   KAFKA_BROKERS:   "kafka.drova.svc.cluster.local:9092"
   JAEGER_ENDPOINT: "jaeger-collector.jaeger.svc.cluster.local:4318"
-  REDIS_URL:       "redis-drova-replication-leader.drova.svc.cluster.local:6379"
+  REDIS_URL:       "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
 
   STRIPE_CURRENCY:    "eur"
   STRIPE_SUCCESS_URL: "https://drova.timourhomelab.org/?payment=success"
