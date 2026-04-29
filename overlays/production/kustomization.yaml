@@ -25,11 +25,8 @@ images:
     newTag: v0.9.4
   - name: ghcr.io/tim275/drova/chat-service
     newTag: v0.9.4
-labels:
-  - pairs:
-      app.kubernetes.io/name: drova
-      app.kubernetes.io/part-of: drova
-      environment: production
-      team: timour
-    includeSelectors: false
-    includeTemplates: false
+commonLabels:
+  app.kubernetes.io/name: drova
+  app.kubernetes.io/part-of: drova
+  environment: production
+  team: timour
