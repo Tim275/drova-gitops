@@ -26,4 +26,4 @@ data:
   STRIPE_CANCEL_URL:  "https://drova.timourhomelab.org/?payment=cancel"
 
   MIGRATIONS_PATH: "migrations"
-  SEED: "true"
+  SEED: "false"
