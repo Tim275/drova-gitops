@@ -43,6 +43,16 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: MONGO_URI
+            - name: REDIS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_URL
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drova-redis-secret
+                  key: password
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
