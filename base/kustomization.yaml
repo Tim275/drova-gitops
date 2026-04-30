@@ -11,3 +11,4 @@ resources:
   - services/driver-service.yaml
   - services/payment-service.yaml
   - services/chat-service.yaml
+  - services/hpa-pdb.yaml
