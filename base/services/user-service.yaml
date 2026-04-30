@@ -32,6 +32,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
+            - containerPort: 9091
+              name: grpc
           resources:
             requests:
               cpu: 100m
