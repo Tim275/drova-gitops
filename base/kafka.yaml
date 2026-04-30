@@ -42,7 +42,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: kafka
-          image: apache/kafka:3.7.0
+          image: docker.io/apache/kafka:3.7.0
           command:
             - /bin/bash
             - -c
