@@ -39,11 +39,11 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
-            - name: JAEGER_ENDPOINT
+            - name: OTEL_COLLECTOR_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: JAEGER_ENDPOINT
+                  key: OTEL_COLLECTOR_ENDPOINT
             - name: ENVIRONMENT
               valueFrom:
                 configMapKeyRef:
@@ -64,6 +64,11 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: MAPBOX_TOKEN
+            - name: SERVICE_REFERER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SERVICE_REFERER
 ---
 apiVersion: v1
 kind: Service
