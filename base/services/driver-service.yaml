@@ -39,6 +39,16 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
+            - name: REDIS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_URL
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drova-redis-secret
+                  key: password
             - name: OTEL_COLLECTOR_ENDPOINT
               valueFrom:
                 configMapKeyRef:
