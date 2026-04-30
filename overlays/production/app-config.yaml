@@ -17,9 +17,9 @@ data:
   DRIVER_SERVICE_URL: "driver-service.drova.svc.cluster.local:9092"
   USER_SERVICE_URL:   "http://user-service.drova.svc.cluster.local:8082"
 
-  KAFKA_BROKERS:   "kafka.drova.svc.cluster.local:9092"
-  JAEGER_ENDPOINT: "jaeger-collector.jaeger.svc.cluster.local:4318"
-  REDIS_URL:       "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
+  KAFKA_BROKERS: "kafka.drova.svc.cluster.local:9092"
+  OTEL_COLLECTOR_ENDPOINT: "otel-collector-collector.opentelemetry.svc.cluster.local:4318"
+  REDIS_URL:     "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
 
   STRIPE_CURRENCY:    "eur"
   STRIPE_SUCCESS_URL: "https://drova.timourhomelab.org/?payment=success"
