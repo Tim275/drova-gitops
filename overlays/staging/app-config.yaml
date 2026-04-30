@@ -25,5 +25,7 @@ data:
   STRIPE_SUCCESS_URL: "https://staging.drova.timourhomelab.org/?payment=success"
   STRIPE_CANCEL_URL:  "https://staging.drova.timourhomelab.org/?payment=cancel"
 
+  SERVICE_REFERER: "https://staging.drova.timourhomelab.org"
+
   MIGRATIONS_PATH: "migrations"
   SEED: "true"
