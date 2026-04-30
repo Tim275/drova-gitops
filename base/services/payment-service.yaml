@@ -30,6 +30,9 @@ spec:
         - name: payment-service
           image: ghcr.io/tim275/drova/payment-service:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8085
+              name: health
           resources:
             requests:
               cpu: 50m
@@ -83,3 +86,19 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: STRIPE_SECRET_KEY
+            - name: HEALTH_ADDR
+              value: ":8085"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8085
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8085
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            failureThreshold: 3
