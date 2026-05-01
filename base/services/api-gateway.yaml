@@ -130,6 +130,12 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: STRIPE_PUBLIC_KEY
+            - name: SCHEMA_REGISTRY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SCHEMA_REGISTRY_URL
+                  optional: true
           volumeMounts:
             - name: kafka-ca
               mountPath: /etc/kafka-tls

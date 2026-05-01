@@ -33,5 +33,7 @@ data:
   SMTP_PORT: "587"
   USER_SERVICE_GRPC_URL: "user-service.drova.svc.cluster.local:9091"
 
+  SCHEMA_REGISTRY_URL: "http://schema-registry.drova.svc.cluster.local:8080/apis/ccompat/v7"
+
   MIGRATIONS_PATH: "migrations"
   SEED: "false"
