@@ -56,21 +56,6 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
-            - name: KAFKA_SASL_MECHANISM
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: KAFKA_SASL_MECHANISM
-            - name: KAFKA_SASL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: drova-kafka-secrets
-                  key: KAFKA_SASL_USERNAME
-            - name: KAFKA_SASL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: drova-kafka-secrets
-                  key: KAFKA_SASL_PASSWORD
             - name: OTEL_COLLECTOR_ENDPOINT
               valueFrom:
                 configMapKeyRef:
