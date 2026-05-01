@@ -20,7 +20,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: schema-registry
-          image: quay.io/apicurio/apicurio-registry:2.6.10.Final
+          image: quay.io/apicurio/apicurio-registry:latest-release
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
