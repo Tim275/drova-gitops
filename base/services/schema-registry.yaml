@@ -40,14 +40,14 @@ spec:
               - ALL
           readinessProbe:
             httpGet:
-              path: /health/ready
+              path: /q/health/ready
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /health/live
+              path: /q/health/live
               port: 8080
             initialDelaySeconds: 20
             periodSeconds: 30
