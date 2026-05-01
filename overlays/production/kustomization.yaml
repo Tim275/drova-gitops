@@ -12,6 +12,7 @@ resources:
   - sealed-secrets/sealed-secret-pg-payments-creds.yaml
   - sealed-secrets/sealed-secret-pg-drivers-creds.yaml
   - sealed-secrets/sealed-secret-redis.yaml
+  - sealed-secrets/sealed-secret-kafka.yaml
   - seed-job.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
