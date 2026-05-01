@@ -17,7 +17,8 @@ data:
   DRIVER_SERVICE_URL: "driver-service.drova.svc.cluster.local:9092"
   USER_SERVICE_URL:   "http://user-service.drova.svc.cluster.local:8082"
 
-  KAFKA_BROKERS:            "drova-kafka-kafka-bootstrap.drova.svc.cluster.local:9092"
+  KAFKA_BROKERS:            "drova-kafka-kafka-bootstrap.drova.svc.cluster.local:9095"
+  KAFKA_SASL_MECHANISM:     "SCRAM-SHA-512"
   KAFKA_REPLICATION_FACTOR: "1"
   OTEL_COLLECTOR_ENDPOINT: "otel-collector-collector.opentelemetry.svc.cluster.local:4318"
   REDIS_URL:       "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
