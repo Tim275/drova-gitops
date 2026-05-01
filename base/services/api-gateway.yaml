@@ -21,6 +21,13 @@ spec:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65532
+      volumes:
+        - name: kafka-ca
+          secret:
+            secretName: drova-kafka-cluster-ca-cert
+            items:
+              - key: ca.crt
+                path: ca.crt
       containers:
         - name: api-gateway
           image: ghcr.io/tim275/drova/api-gateway:latest
@@ -66,6 +73,8 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
+            - name: KAFKA_TLS_CA_CERT
+              value: /etc/kafka-tls/ca.crt
             - name: KAFKA_SASL_MECHANISM
               valueFrom:
                 configMapKeyRef:
@@ -121,6 +130,10 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: STRIPE_PUBLIC_KEY
+          volumeMounts:
+            - name: kafka-ca
+              mountPath: /etc/kafka-tls
+              readOnly: true
           readinessProbe:
             httpGet:
               path: /health
