@@ -18,6 +18,8 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: schema-registry
           image: quay.io/apicurio/apicurio-registry:3.2.3
@@ -25,6 +27,8 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+            - containerPort: 9000
+              name: management
           resources:
             requests:
               cpu: 50m
@@ -40,15 +44,15 @@ spec:
               - ALL
           readinessProbe:
             httpGet:
-              path: /q/health/ready
-              port: 8080
+              path: /health/ready
+              port: 9000
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /q/health/live
-              port: 8080
+              path: /health/live
+              port: 9000
             initialDelaySeconds: 20
             periodSeconds: 30
             failureThreshold: 3
