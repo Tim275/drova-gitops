@@ -20,16 +20,11 @@ spec:
         runAsGroup: 1000
       containers:
         - name: schema-registry
-          image: quay.io/apicurio/apicurio-registry:latest-release
+          image: quay.io/apicurio/apicurio-registry:3.2.3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               name: http
-          env:
-            - name: APICURIO_STORAGE_KIND
-              value: mem
-            - name: APICURIO_APIS_COMPATIBILITY_CONFLUENT_LEGACY_ENABLED
-              value: "true"
           resources:
             requests:
               cpu: 50m
