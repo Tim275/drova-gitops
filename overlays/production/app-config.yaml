@@ -28,5 +28,9 @@ data:
 
   SERVICE_REFERER: "https://drova.timourhomelab.org"
 
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_PORT: "587"
+  USER_SERVICE_GRPC_URL: "user-service.drova.svc.cluster.local:9091"
+
   MIGRATIONS_PATH: "migrations"
   SEED: "false"
