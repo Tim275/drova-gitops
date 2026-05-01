@@ -17,6 +17,10 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8081"
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
       containers:
         - name: api-gateway
           image: ghcr.io/tim275/drova/api-gateway:latest
@@ -30,6 +34,12 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - ALL
           env:
             - name: HTTP_ADDR
               valueFrom:
@@ -56,6 +66,21 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
+            - name: KAFKA_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: KAFKA_SASL_MECHANISM
+            - name: KAFKA_SASL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: drova-kafka-secrets
+                  key: KAFKA_SASL_USERNAME
+            - name: KAFKA_SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drova-kafka-secrets
+                  key: KAFKA_SASL_PASSWORD
             - name: OTEL_COLLECTOR_ENDPOINT
               valueFrom:
                 configMapKeyRef:

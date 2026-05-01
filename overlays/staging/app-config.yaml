@@ -27,5 +27,7 @@ data:
 
   SERVICE_REFERER: "https://staging.drova.timourhomelab.org"
 
+  USER_SERVICE_GRPC_URL: "user-service.drova-staging.svc.cluster.local:9091"
+
   MIGRATIONS_PATH: "migrations"
   SEED: "true"

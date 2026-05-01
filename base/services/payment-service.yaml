@@ -18,6 +18,12 @@ spec:
         - name: migrate
           image: ghcr.io/tim275/drova/payment-service:latest
           command: ["/app/payment-service", "migrate"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - ALL
           env:
             - name: DB_URL
               valueFrom:
@@ -26,6 +32,10 @@ spec:
                   key: DB_URL
             - name: MIGRATIONS_PATH
               value: "migrations"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
       containers:
         - name: payment-service
           image: ghcr.io/tim275/drova/payment-service:latest
@@ -46,6 +56,21 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: KAFKA_BROKERS
+            - name: KAFKA_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: KAFKA_SASL_MECHANISM
+            - name: KAFKA_SASL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: drova-kafka-secrets
+                  key: KAFKA_SASL_USERNAME
+            - name: KAFKA_SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drova-kafka-secrets
+                  key: KAFKA_SASL_PASSWORD
             - name: OTEL_COLLECTOR_ENDPOINT
               valueFrom:
                 configMapKeyRef:
