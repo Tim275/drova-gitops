@@ -13,17 +13,17 @@ resources:
   - sealed-secrets/sealed-secret-redis.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
   - name: ghcr.io/tim275/drova/user-service
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
   - name: ghcr.io/tim275/drova/trip-service
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
   - name: ghcr.io/tim275/drova/driver-service
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
   - name: ghcr.io/tim275/drova/payment-service
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
   - name: ghcr.io/tim275/drova/chat-service
-    newTag: sha-a3e44da85cb0de3d08a3665b064e038308c3ad0b
+    newTag: v0.10.0
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova
