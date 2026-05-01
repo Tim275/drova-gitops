@@ -122,6 +122,12 @@ spec:
                   key: STRIPE_SECRET_KEY
             - name: HEALTH_ADDR
               value: ":8085"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+              - ALL
           volumeMounts:
             - name: kafka-ca
               mountPath: /etc/kafka-tls
