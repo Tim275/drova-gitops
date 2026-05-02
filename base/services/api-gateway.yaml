@@ -1,8 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: '3'
   name: api-gateway
 spec:
   replicas: 1
@@ -14,144 +15,152 @@ spec:
       labels:
         app: api-gateway
       annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8081"
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8081'
     spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65532
       volumes:
-        - name: kafka-ca
-          secret:
-            secretName: drova-kafka-cluster-ca-cert
-            items:
-              - key: ca.crt
-                path: ca.crt
+      - name: kafka-ca
+        secret:
+          secretName: drova-kafka-cluster-ca-cert
+          items:
+          - key: ca.crt
+            path: ca.crt
       containers:
-        - name: api-gateway
-          image: ghcr.io/tim275/drova/api-gateway:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8081
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-              - ALL
-          env:
-            - name: HTTP_ADDR
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: GATEWAY_HTTP_ADDR
-            - name: TRIP_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: TRIP_SERVICE_URL
-            - name: DRIVER_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: DRIVER_SERVICE_URL
-            - name: USER_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: USER_SERVICE_URL
-            - name: KAFKA_BROKERS
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: KAFKA_BROKERS
-            - name: KAFKA_TLS_CA_CERT
-              value: /etc/kafka-tls/ca.crt
-            - name: KAFKA_SASL_MECHANISM
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: KAFKA_SASL_MECHANISM
-            - name: KAFKA_SASL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: drova-kafka-secrets
-                  key: KAFKA_SASL_USERNAME
-            - name: KAFKA_SASL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: drova-kafka-secrets
-                  key: KAFKA_SASL_PASSWORD
-            - name: OTEL_COLLECTOR_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: OTEL_COLLECTOR_ENDPOINT
-            - name: REDIS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: REDIS_URL
-            - name: ENVIRONMENT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: ENVIRONMENT
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: JWT_SECRET
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: drova-redis-secret
-                  key: password
-            - name: MAPBOX_PUBLIC_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: MAPBOX_PUBLIC_TOKEN
-            - name: STRIPE_WEBHOOK_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: STRIPE_WEBHOOK_KEY
-            - name: STRIPE_PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: STRIPE_PUBLIC_KEY
-            - name: SCHEMA_REGISTRY_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: SCHEMA_REGISTRY_URL
-                  optional: true
-          volumeMounts:
-            - name: kafka-ca
-              mountPath: /etc/kafka-tls
-              readOnly: true
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8081
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8081
-            initialDelaySeconds: 15
-            periodSeconds: 30
+      - name: api-gateway
+        image: ghcr.io/tim275/drova/api-gateway:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        env:
+        - name: HTTP_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: GATEWAY_HTTP_ADDR
+        - name: TRIP_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: TRIP_SERVICE_URL
+        - name: DRIVER_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DRIVER_SERVICE_URL
+        - name: USER_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: USER_SERVICE_URL
+        - name: KAFKA_BROKERS
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: KAFKA_BROKERS
+        - name: KAFKA_TLS_CA_CERT
+          value: "/etc/kafka-tls/ca.crt"
+        - name: KAFKA_SASL_MECHANISM
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: KAFKA_SASL_MECHANISM
+        - name: KAFKA_SASL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: drova-kafka-secrets
+              key: KAFKA_SASL_USERNAME
+        - name: KAFKA_SASL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drova-kafka-secrets
+              key: KAFKA_SASL_PASSWORD
+        - name: OTEL_COLLECTOR_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: OTEL_COLLECTOR_ENDPOINT
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: REDIS_URL
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ENVIRONMENT
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: JWT_SECRET
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drova-redis-secret
+              key: password
+        - name: MAPBOX_PUBLIC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: MAPBOX_PUBLIC_TOKEN
+        - name: STRIPE_WEBHOOK_KEY
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: STRIPE_WEBHOOK_KEY
+        - name: STRIPE_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: STRIPE_PUBLIC_KEY
+        - name: SCHEMA_REGISTRY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: SCHEMA_REGISTRY_URL
+              optional: true
+        volumeMounts:
+        - name: kafka-ca
+          mountPath: "/etc/kafka-tls"
+          readOnly: true
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - sleep 15
+      terminationGracePeriodSeconds: 60
 ---
 apiVersion: v1
 kind: Service
@@ -161,5 +170,5 @@ spec:
   selector:
     app: api-gateway
   ports:
-    - port: 8081
-      targetPort: 8081
+  - port: 8081
+    targetPort: 8081

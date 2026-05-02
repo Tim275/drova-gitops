@@ -1,8 +1,9 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: '3'
   name: chat-service
 spec:
   replicas: 1
@@ -19,74 +20,82 @@ spec:
         runAsUser: 65532
         runAsGroup: 65532
       containers:
-        - name: chat-service
-          image: ghcr.io/tim275/drova/chat-service:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8084
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 250m
-              memory: 256Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-              - ALL
-          env:
-            - name: HTTP_ADDR
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: CHAT_HTTP_ADDR
-            - name: ENVIRONMENT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: ENVIRONMENT
-            - name: OTEL_COLLECTOR_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: OTEL_COLLECTOR_ENDPOINT
-            - name: MONGO_URI
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: MONGO_URI
-            - name: REDIS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: REDIS_URL
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: drova-redis-secret
-                  key: password
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: drova-app-secrets
-                  key: JWT_SECRET
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8084
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8084
-            initialDelaySeconds: 15
-            periodSeconds: 30
-            failureThreshold: 3
+      - name: chat-service
+        image: ghcr.io/tim275/drova/chat-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8084
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        env:
+        - name: HTTP_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: CHAT_HTTP_ADDR
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ENVIRONMENT
+        - name: OTEL_COLLECTOR_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: OTEL_COLLECTOR_ENDPOINT
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: MONGO_URI
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: REDIS_URL
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drova-redis-secret
+              key: password
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: drova-app-secrets
+              key: JWT_SECRET
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: 8084
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: 8084
+          initialDelaySeconds: 15
+          periodSeconds: 30
+          failureThreshold: 3
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - sleep 15
+      terminationGracePeriodSeconds: 60
 ---
 apiVersion: v1
 kind: Service
@@ -96,5 +105,5 @@ spec:
   selector:
     app: chat-service
   ports:
-    - port: 8084
-      targetPort: 8084
+  - port: 8084
+    targetPort: 8084
