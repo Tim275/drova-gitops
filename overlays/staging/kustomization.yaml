@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: drova-staging
 resources:
   - ../../base
-  - app-config.yaml
-  - httproute.yaml
+  - config/app-config.yaml
+  - config/httproute.yaml
   - sealed-secrets/sealed-secret-app.yaml
   - sealed-secrets/sealed-secret-pg-app-creds.yaml
   - sealed-secrets/sealed-secret-pg-users-creds.yaml

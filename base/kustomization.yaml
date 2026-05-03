@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-  - services/schema-registry.yaml
-  - services/api-gateway.yaml
-  - services/user-service.yaml
-  - services/trip-service.yaml
-  - services/driver-service.yaml
-  - services/payment-service.yaml
-  - services/chat-service.yaml
-  - services/hpa-pdb.yaml
+  - platform/schema-registry
+  - services/api-gateway
+  - services/user-service
+  - services/trip-service
+  - services/driver-service
+  - services/payment-service
+  - services/chat-service

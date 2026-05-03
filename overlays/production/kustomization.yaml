@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: drova
 resources:
   - ../../base
-  - app-config.yaml
-  - httproute.yaml
+  - config/app-config.yaml
+  - config/httproute.yaml
   - sealed-secrets/sealed-secret-app.yaml
   - sealed-secrets/sealed-secret-pg-app-creds.yaml
   - sealed-secrets/sealed-secret-pg-users-creds.yaml
@@ -13,7 +13,7 @@ resources:
   - sealed-secrets/sealed-secret-pg-drivers-creds.yaml
   - sealed-secrets/sealed-secret-redis.yaml
   - sealed-secrets/sealed-secret-kafka.yaml
-  - seed-job.yaml
+  - jobs/seed-job.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
     newTag: v0.13.0
