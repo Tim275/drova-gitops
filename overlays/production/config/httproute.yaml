@@ -46,7 +46,7 @@ kind: HTTPRoute
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
-  name: drova-app
+  name: drova-api
   namespace: drova
 spec:
   parentRefs:
@@ -66,7 +66,25 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /
+            value: /v1
+        - path:
+            type: PathPrefix
+            value: /trip
+        - path:
+            type: PathPrefix
+            value: /trips
+        - path:
+            type: PathPrefix
+            value: /ws/drivers
+        - path:
+            type: PathPrefix
+            value: /ws/riders
+        - path:
+            type: PathPrefix
+            value: /webhook
+        - path:
+            type: PathPrefix
+            value: /health
       filters:
         - type: ResponseHeaderModifier
           responseHeaderModifier:
@@ -84,6 +102,41 @@ spec:
       backendRefs:
         - name: api-gateway
           port: 8081
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  name: drova-frontend
+  namespace: drova
+spec:
+  parentRefs:
+    - name: envoy-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - "drova.timourhomelab.org"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      filters:
+        - type: ResponseHeaderModifier
+          responseHeaderModifier:
+            add:
+              - name: X-Frame-Options
+                value: DENY
+              - name: X-Content-Type-Options
+                value: nosniff
+              - name: Strict-Transport-Security
+                value: "max-age=31536000; includeSubDomains"
+              - name: Referrer-Policy
+                value: strict-origin-when-cross-origin
+      backendRefs:
+        - name: frontend
+          port: 8080
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

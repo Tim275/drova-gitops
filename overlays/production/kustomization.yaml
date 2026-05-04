@@ -27,6 +27,8 @@ images:
     newTag: v0.13.0
   - name: ghcr.io/tim275/drova/chat-service
     newTag: v0.13.0
+  - name: ghcr.io/tim275/drova/frontend
+    newTag: v0.13.0
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova

@@ -9,3 +9,4 @@ resources:
   - services/driver-service
   - services/payment-service
   - services/chat-service
+  - services/frontend
