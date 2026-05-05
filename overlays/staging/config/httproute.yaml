@@ -40,8 +40,14 @@ spec:
             type: PathPrefix
             value: /webhook
         - path:
-            type: PathPrefix
+            type: Exact
             value: /health
+        - path:
+            type: Exact
+            value: /readyz
+        - path:
+            type: Exact
+            value: /config
       backendRefs:
         - name: api-gateway
           port: 8081
