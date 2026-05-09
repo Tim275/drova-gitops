@@ -1,0 +1,15 @@
+# payment-service: Kafka-only Worker, exposed nur Health- + Metrics-Port
+# (Andere Services konsumieren via Kafka, nicht via HTTP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+spec:
+  selector:
+    app: payment-service
+  ports:
+    - name: health
+      port: 8085
+      targetPort: 8085

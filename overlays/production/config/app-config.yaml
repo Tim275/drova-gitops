@@ -23,6 +23,7 @@ data:
   OTEL_COLLECTOR_ENDPOINT: "otel-collector-collector.opentelemetry.svc.cluster.local:4318"
   REDIS_URL:       "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
 
+  PAYMENT_MODE: "stripe"
   STRIPE_CURRENCY:    "eur"
   STRIPE_SUCCESS_URL: "https://drova.timourhomelab.org/?payment=success"
   STRIPE_CANCEL_URL:  "https://drova.timourhomelab.org/?payment=cancel"
