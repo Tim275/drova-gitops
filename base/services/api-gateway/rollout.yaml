@@ -43,6 +43,10 @@ spec:
     metadata:
       labels:
         app: api-gateway
+        app.kubernetes.io/name: drova
+        app.kubernetes.io/part-of: drova
+        environment: production
+        team: timour
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '8081'
