@@ -1,23 +1,4 @@
 ---
-## Argo-Rollouts Canary Strategy for api-gateway
-##
-## How Canary works (replica-based, no service-mesh):
-##   1. setWeight: 20 → 20% of replicas (1 of 5) run v-new
-##   2. pause 3min → AnalysisTemplate prüft Prometheus-SLI
-##   3. setWeight: 50 → 50% replicas run v-new
-##   4. pause 3min → AnalysisTemplate
-##   5. setWeight: 100 → all replicas run v-new
-##
-## AnalysisTemplate prüft alle 30s:
-##   - 5xx-error-rate < 1% (success-condition)
-##   - p99-latency < 1s
-## Wenn 2 Messungen FAIL → automatic abort + rollback to stable
-##
-## Manual control via:
-##   kubectl argo rollouts get rollout api-gateway -n drova --watch
-##   kubectl argo rollouts promote api-gateway -n drova       # skip pause
-##   kubectl argo rollouts abort api-gateway -n drova         # rollback
-##   kubectl argo rollouts set image api-gateway api-gateway=<new-tag>
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -25,58 +6,40 @@ metadata:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway
 spec:
-  replicas: 5    # 5 replicas = 20%-Steps (1 pod = 20% traffic)
+  replicas: 5
   revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: api-gateway
   strategy:
     canary:
-      ## Services für Traffic-Split (replica-based without service-mesh)
-      canaryService: api-gateway-canary       # only canary-pods
-      stableService: api-gateway-stable       # only stable-pods
-      ## "api-gateway" Service (existing) selects ALL pods → main entry-point
-      ##
-      ## Optional: nach erfolgreichem Canary scale stable down + canary up
+      canaryService: api-gateway-canary
+      stableService: api-gateway-stable
       scaleDownDelaySeconds: 30
-      maxSurge: 1                              # max 1 extra Pod während rollout
-      maxUnavailable: 0                        # nie unavailable
-
+      maxSurge: 1
+      maxUnavailable: 0
       steps:
-        ## Schritt 1: 20% Traffic auf neue Version
         - setWeight: 20
         - pause:
-            duration: 3m                       # 3min beobachten
-
-        ## Schritt 2: PromQL-Check via AnalysisTemplate
+            duration: 3m
         - analysis:
             templates:
               - templateName: success-rate
             args:
               - name: service-name
                 value: api-gateway
-
-        ## Schritt 3: 50% Traffic
         - setWeight: 50
         - pause:
             duration: 3m
-
-        ## Schritt 4: nochmaliger Check
         - analysis:
             templates:
               - templateName: success-rate
             args:
               - name: service-name
                 value: api-gateway
-
-        ## Schritt 5: 80% Traffic
         - setWeight: 80
         - pause:
             duration: 2m
-
-        ## Schritt 6: 100% (rollout done)
-        ## NOTE: setWeight 100 happens automatically after last step
-
   template:
     metadata:
       labels:

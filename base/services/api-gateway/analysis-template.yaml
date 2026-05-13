@@ -1,16 +1,4 @@
 ---
-## AnalysisTemplate — Prometheus-based Canary-Approval-Gate
-##
-## Wird von Rollout-CR aufgerufen während Canary-Steps.
-## Wenn Prometheus-Query "successCondition" 5× FAIL (failureLimit: 2 + count: 5):
-##   → Argo-Rollouts macht ABORT + Rollback zu stable
-##
-## Metrics-Source: OpenTelemetry HTTP Server Instrumentation
-##   service_name="api-gateway"
-##   http_server_request_duration_seconds_count / _bucket
-##
-## Tests gegen Prometheus in monitoring NS:
-##   http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
@@ -20,16 +8,12 @@ metadata:
 spec:
   args:
     - name: service-name
-      ## Wird vom Rollout-CR übergeben: "api-gateway"
-
   metrics:
-    ## Metric 1: HTTP Success-Rate >= 99%
-    ## Berechnet sich aus: (alle non-5xx) / (alle requests)
     - name: success-rate
-      interval: 30s          # alle 30s messen
-      count: 5               # 5 Messungen total (= 2.5min)
+      interval: 30s
+      count: 5
       successCondition: result[0] >= 0.99
-      failureLimit: 2        # max 2 schlechte Messungen → abort
+      failureLimit: 2
       provider:
         prometheus:
           address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
@@ -46,8 +30,6 @@ spec:
                 service_name="{{args.service-name}}"
               }[2m]
             ))
-
-    ## Metric 2: p99 Latency < 1.0s
     - name: p99-latency
       interval: 30s
       count: 5

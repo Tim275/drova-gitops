@@ -3,14 +3,12 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: api-gateway
 spec:
-  ## HPA targets Rollout-CR (NICHT Deployment) für Canary-Setup.
-  ## Argo-Rollouts supportet scaleTargetRef von HPA seit v0.10+
   scaleTargetRef:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: api-gateway
-  minReplicas: 5    # 5 für 20%-Canary-Steps (1 Pod = 20% Traffic)
-  maxReplicas: 10   # Headroom für Burst
+  minReplicas: 5
+  maxReplicas: 10
   metrics:
     - type: Resource
       resource:
