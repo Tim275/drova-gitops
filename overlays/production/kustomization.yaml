@@ -15,19 +15,19 @@ resources:
   - jobs/seed-job.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/user-service
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/trip-service
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/driver-service
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/payment-service
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/chat-service
-    newTag: v0.16.2
+    newTag: v0.17.0
   - name: ghcr.io/tim275/drova/frontend
-    newTag: v0.16.2
+    newTag: v0.17.0
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova
