@@ -115,6 +115,11 @@ spec:
                 secretKeyRef:
                   name: drova-pg-payments-creds
                   key: DB_URL
+            - name: POOL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drova-pg-payments-creds
+                  key: POOL_URL
             - name: STRIPE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
