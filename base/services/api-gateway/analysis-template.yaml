@@ -1,0 +1,50 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '3'
+  name: success-rate
+spec:
+  args:
+    - name: service-name
+  metrics:
+    - name: success-rate
+      initialDelay: 60s
+      interval: 30s
+      count: 5
+      successCondition: "len(result) == 0 || result[0] >= 0.99"
+      failureLimit: 2
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            sum(rate(
+              http_server_request_duration_seconds_count{
+                service_name="{{args.service-name}}",
+                http_response_status_code!~"5.."
+              }[2m]
+            ))
+            /
+            sum(rate(
+              http_server_request_duration_seconds_count{
+                service_name="{{args.service-name}}"
+              }[2m]
+            ))
+    - name: p99-latency
+      initialDelay: 60s
+      interval: 30s
+      count: 5
+      successCondition: "len(result) == 0 || result[0] < 1.0"
+      failureLimit: 2
+      provider:
+        prometheus:
+          address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            histogram_quantile(0.99,
+              sum by (le) (rate(
+                http_server_request_duration_seconds_bucket{
+                  service_name="{{args.service-name}}"
+                }[5m]
+              ))
+            )

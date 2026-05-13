@@ -1,15 +1,45 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway
 spec:
-  replicas: 1
+  replicas: 5
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: api-gateway
+  strategy:
+    canary:
+      canaryService: api-gateway-canary
+      stableService: api-gateway-stable
+      scaleDownDelaySeconds: 30
+      maxSurge: 1
+      maxUnavailable: 0
+      steps:
+        - setWeight: 20
+        - pause:
+            duration: 3m
+        - analysis:
+            templates:
+              - templateName: success-rate
+            args:
+              - name: service-name
+                value: api-gateway
+        - setWeight: 50
+        - pause:
+            duration: 3m
+        - analysis:
+            templates:
+              - templateName: success-rate
+            args:
+              - name: service-name
+                value: api-gateway
+        - setWeight: 80
+        - pause:
+            duration: 2m
   template:
     metadata:
       labels:

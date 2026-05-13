@@ -4,11 +4,11 @@ metadata:
   name: api-gateway
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
     name: api-gateway
-  minReplicas: 1
-  maxReplicas: 6
+  minReplicas: 5
+  maxReplicas: 10
   metrics:
     - type: Resource
       resource:
