@@ -1,44 +1,20 @@
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+# REFERENZ: Plain Deployment für api-gateway (Fallback ohne Argo Rollouts).
+# Aktuell NICHT aktiv — rollout.yaml wird verwendet (canary via Argo Rollouts).
+# Um zurückzuwechseln: deployment.yaml in kustomization.yaml einkommentieren,
+# rollout.yaml + service-canary.yaml + service-stable.yaml + analysis-template.yaml auskommentieren.
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway
 spec:
-  replicas: 5
+  replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: api-gateway
-  strategy:
-    canary:
-      canaryService: api-gateway-canary
-      stableService: api-gateway-stable
-      maxSurge: 1
-      maxUnavailable: 0
-      steps:
-        - setWeight: 20
-        - pause:
-            duration: 3m
-        - analysis:
-            templates:
-              - templateName: success-rate
-            args:
-              - name: service-name
-                value: api-gateway
-        - setWeight: 50
-        - pause:
-            duration: 3m
-        - analysis:
-            templates:
-              - templateName: success-rate
-            args:
-              - name: service-name
-                value: api-gateway
-        - setWeight: 80
-        - pause:
-            duration: 2m
   template:
     metadata:
       labels:
