@@ -101,6 +101,11 @@ spec:
                 secretKeyRef:
                   name: drova-pg-drivers-creds
                   key: DB_URL
+            - name: POOL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drova-pg-drivers-creds
+                  key: POOL_URL
           volumeMounts:
             - name: kafka-ca
               mountPath: "/etc/kafka-tls"

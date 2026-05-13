@@ -95,6 +95,11 @@ spec:
                 secretKeyRef:
                   name: drova-pg-users-creds
                   key: DB_URL
+            - name: POOL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drova-pg-users-creds
+                  key: POOL_URL
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:

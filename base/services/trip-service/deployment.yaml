@@ -111,6 +111,11 @@ spec:
                 secretKeyRef:
                   name: drova-pg-trips-creds
                   key: DB_URL
+            - name: POOL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: drova-pg-trips-creds
+                  key: POOL_URL
             - name: MAPBOX_TOKEN
               valueFrom:
                 secretKeyRef:
