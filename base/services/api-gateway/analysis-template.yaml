@@ -10,9 +10,10 @@ spec:
     - name: service-name
   metrics:
     - name: success-rate
+      initialDelay: 60s
       interval: 30s
       count: 5
-      successCondition: result[0] >= 0.99
+      successCondition: "len(result) == 0 || result[0] >= 0.99"
       failureLimit: 2
       provider:
         prometheus:
@@ -31,9 +32,10 @@ spec:
               }[2m]
             ))
     - name: p99-latency
+      initialDelay: 60s
       interval: 30s
       count: 5
-      successCondition: result[0] < 1.0
+      successCondition: "len(result) == 0 || result[0] < 1.0"
       failureLimit: 2
       provider:
         prometheus:

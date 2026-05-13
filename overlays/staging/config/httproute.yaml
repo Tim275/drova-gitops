@@ -49,7 +49,7 @@ spec:
             type: Exact
             value: /config
       backendRefs:
-        - name: api-gateway
+        - name: api-gateway-stable
           port: 8081
 ---
 apiVersion: gateway.networking.k8s.io/v1
