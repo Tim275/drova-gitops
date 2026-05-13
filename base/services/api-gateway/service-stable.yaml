@@ -1,0 +1,17 @@
+---
+## Stable Service — selects ONLY stable-pods (managed by Argo-Rollouts)
+## Used internally by Rollout-CR to inject "rollouts-pod-template-hash" label
+## NICHT direkt von Apps aufrufen — main "api-gateway" Service ist Entry-Point.
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '3'
+  name: api-gateway-stable
+spec:
+  selector:
+    app: api-gateway
+    ## Argo-Rollouts injects: rollouts-pod-template-hash=<stable-rs-hash>
+  ports:
+    - port: 8081
+      targetPort: 8081

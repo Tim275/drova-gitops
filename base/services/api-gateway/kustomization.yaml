@@ -1,7 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+## Argo-Rollouts Canary Setup (replaces plain Deployment).
+## Migration date: 2026-05-13
+##
+## Files:
+##   rollout.yaml          — Rollout-CR mit Canary-Strategy (5 replicas, 20%-Steps)
+##   analysis-template.yaml — Prometheus-Gate (success-rate + p99-latency)
+##   service.yaml          — Main Service (User-Traffic-Entry, selects all pods)
+##   service-canary.yaml   — Internal: only canary-pods (Argo-Rollouts managed)
+##   service-stable.yaml   — Internal: only stable-pods (Argo-Rollouts managed)
+##   hpa.yaml              — autoscaling, scaleTargetRef→Rollout
+##   pdb.yaml              — PodDisruptionBudget (mindestens 1 Pod)
 resources:
-  - deployment.yaml
+  - rollout.yaml
+  - analysis-template.yaml
   - service.yaml
+  - service-canary.yaml
+  - service-stable.yaml
   - hpa.yaml
   - pdb.yaml
