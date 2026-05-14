@@ -53,8 +53,8 @@ spec:
                 && echo "✓ dispatch sent — drova/prod-verify.yaml will run health-poll + auto-rollback"
           resources:
             requests:
-              cpu: 10m
-              memory: 32Mi
+              cpu: 20m          # drova LimitRange min: 20m
+              memory: 64Mi      # drova LimitRange min: 64Mi
             limits:
               cpu: 100m
-              memory: 64Mi
+              memory: 128Mi     # bumped to fit LimitRange max-ratio
