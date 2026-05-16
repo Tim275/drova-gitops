@@ -19,6 +19,15 @@ spec:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65532
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: chat-service
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: chat-service
           image: ghcr.io/tim275/drova/chat-service:latest

@@ -19,6 +19,15 @@ spec:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65532
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: driver-service
+                topologyKey: kubernetes.io/hostname
       volumes:
         - name: kafka-ca
           secret:
