@@ -21,7 +21,7 @@ data:
   KAFKA_SASL_MECHANISM:     "SCRAM-SHA-512"
   KAFKA_REPLICATION_FACTOR: "1"
   OTEL_COLLECTOR_ENDPOINT: "otel-collector-collector.opentelemetry.svc.cluster.local:4318"
-  REDIS_URL:       "redis-drova-0.redis-drova-headless.drova.svc.cluster.local:6379"
+  REDIS_URL:       "redis-drova-master.drova.svc.cluster.local:6379"
 
   PAYMENT_MODE: "stripe"
   STRIPE_CURRENCY:    "eur"
