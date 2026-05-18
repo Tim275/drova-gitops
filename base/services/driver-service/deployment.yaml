@@ -6,7 +6,6 @@ metadata:
     argocd.argoproj.io/sync-wave: '3'
   name: driver-service
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: driver-service

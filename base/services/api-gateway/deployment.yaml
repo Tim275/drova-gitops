@@ -10,7 +10,6 @@ metadata:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway
 spec:
-  replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
