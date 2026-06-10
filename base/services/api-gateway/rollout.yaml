@@ -172,7 +172,7 @@ spec:
               readOnly: true
           readinessProbe:
             httpGet:
-              path: "/health"
+              path: "/readyz"
               port: 8081
             initialDelaySeconds: 5
             periodSeconds: 10

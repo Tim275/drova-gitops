@@ -169,18 +169,26 @@ spec:
                   - "/bin/sh"
                   - "-c"
                   - sleep 15
-          readinessProbe:
+          startupProbe:
             httpGet:
               path: "/health"
               port: 8085
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 20
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: "/readyz"
+              port: 8085
+            periodSeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 3
           livenessProbe:
             httpGet:
               path: "/health"
               port: 8085
-            initialDelaySeconds: 15
             periodSeconds: 30
+            failureThreshold: 3
             timeoutSeconds: 5
       terminationGracePeriodSeconds: 60
