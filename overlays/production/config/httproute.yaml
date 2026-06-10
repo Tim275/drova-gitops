@@ -56,13 +56,15 @@ spec:
   hostnames:
     - "drova.timourhomelab.org"
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /ws/chat
-      backendRefs:
-        - name: chat-service
-          port: 8084
+    # WebSocket paths moved to drova-ws route below (WAF-free) — Coraza WASM
+    # breaks WS upgrades, so the WAF targets only the HTTP routes:
+    # - matches:
+    #     - path:
+    #         type: PathPrefix
+    #         value: /ws/chat
+    #   backendRefs:
+    #     - name: chat-service
+    #       port: 8084
     - matches:
         - path:
             type: PathPrefix
@@ -76,12 +78,12 @@ spec:
         - path:
             type: PathPrefix
             value: /drivers
-        - path:
-            type: PathPrefix
-            value: /ws/drivers
-        - path:
-            type: PathPrefix
-            value: /ws/riders
+        # - path:
+        #     type: PathPrefix
+        #     value: /ws/drivers
+        # - path:
+        #     type: PathPrefix
+        #     value: /ws/riders
         - path:
             type: PathPrefix
             value: /webhook
@@ -108,6 +110,40 @@ spec:
                 value: "1; mode=block"
               - name: Referrer-Policy
                 value: strict-origin-when-cross-origin
+      backendRefs:
+        - name: api-gateway-stable
+          port: 8081
+---
+# WebSocket routes — deliberately WAF-free (Coraza WASM breaks WS upgrades).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+  name: drova-ws
+  namespace: drova
+spec:
+  parentRefs:
+    - name: envoy-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - "drova.timourhomelab.org"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /ws/chat
+      backendRefs:
+        - name: chat-service
+          port: 8084
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /ws/drivers
+        - path:
+            type: PathPrefix
+            value: /ws/riders
       backendRefs:
         - name: api-gateway-stable
           port: 8081
