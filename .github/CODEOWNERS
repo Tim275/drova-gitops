@@ -1,0 +1,5 @@
+# Default owners — every PR requires review by:
+* @Tim275
+
+# Production overlay is change-gated:
+/overlays/production/ @Tim275
