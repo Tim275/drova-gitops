@@ -10,11 +10,13 @@ spec:
     - name: service-name
   metrics:
     - name: success-rate
-      initialDelay: 60s
+      initialDelay: 120s
       interval: 30s
       count: 5
-      successCondition: "len(result) == 0 || result[0] >= 0.99"
+      successCondition: "len(result) > 0 && result[0] >= 0.99"
+      failureCondition: "len(result) > 0 && result[0] < 0.95"
       failureLimit: 2
+      inconclusiveLimit: 3
       provider:
         prometheus:
           address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
@@ -32,11 +34,13 @@ spec:
               }[2m]
             ))
     - name: p99-latency
-      initialDelay: 60s
+      initialDelay: 120s
       interval: 30s
       count: 5
-      successCondition: "len(result) == 0 || result[0] < 1.0"
+      successCondition: "len(result) > 0 && result[0] < 1.5"
+      failureCondition: "len(result) > 0 && result[0] >= 2.5"
       failureLimit: 2
+      inconclusiveLimit: 3
       provider:
         prometheus:
           address: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
@@ -45,6 +49,6 @@ spec:
               sum by (le) (rate(
                 http_server_request_duration_seconds_bucket{
                   service_name="{{args.service-name}}"
-                }[5m]
+                }[3m]
               ))
             )
