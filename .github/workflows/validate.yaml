@@ -1,0 +1,35 @@
+name: Validate Manifests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kustomize + kubeconform
+        run: |
+          KUSTOMIZE_VERSION=v5.4.3
+          KUBECONFORM_VERSION=v0.6.7
+          curl -sSfL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" | sudo tar xz -C /usr/local/bin
+          curl -sSfL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" | sudo tar xz -C /usr/local/bin
+
+      - name: Build and validate every overlay
+        run: |
+          set -euo pipefail
+          fail=0
+          for overlay in overlays/*/; do
+            echo "::group::$overlay"
+            if ! kustomize build "$overlay" \
+              | kubeconform -strict -summary -ignore-missing-schemas \
+                  -schema-location default \
+                  -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'; then
+              fail=1
+            fi
+            echo "::endgroup::"
+          done
+          exit $fail
