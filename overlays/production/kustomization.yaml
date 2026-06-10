@@ -5,6 +5,7 @@ resources:
   - ../../base
   - config/app-config.yaml
   - config/httproute.yaml
+  - config/coraza-waf.yaml
   - sealed-secrets/sealed-secret-app.yaml
   - sealed-secrets/sealed-secret-pg-app-creds.yaml
   - sealed-secrets/sealed-secret-pg-users-creds.yaml
