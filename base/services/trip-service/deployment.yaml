@@ -150,17 +150,22 @@ spec:
             - name: kafka-ca
               mountPath: "/etc/kafka-tls"
               readOnly: true
-          readinessProbe:
-            tcpSocket:
+          startupProbe:
+            grpc:
               port: 9093
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 20
+            timeoutSeconds: 3
+          readinessProbe:
+            grpc:
+              port: 9093
+            periodSeconds: 5
             failureThreshold: 3
-            timeoutSeconds: 5
+            timeoutSeconds: 3
           livenessProbe:
             tcpSocket:
               port: 9093
-            initialDelaySeconds: 15
             periodSeconds: 30
             failureThreshold: 3
             timeoutSeconds: 5

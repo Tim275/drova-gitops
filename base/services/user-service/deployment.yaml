@@ -150,19 +150,25 @@ spec:
                 secretKeyRef:
                   name: drova-app-secrets
                   key: FROM_EMAIL
-          readinessProbe:
+          startupProbe:
             httpGet:
               path: "/v1/health"
               port: 8082
             initialDelaySeconds: 5
-            periodSeconds: 10
+            periodSeconds: 5
+            failureThreshold: 24
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: "/v1/readyz"
+              port: 8082
+            periodSeconds: 5
             failureThreshold: 3
-            timeoutSeconds: 5
+            timeoutSeconds: 3
           livenessProbe:
             httpGet:
               path: "/v1/health"
               port: 8082
-            initialDelaySeconds: 15
             periodSeconds: 30
             failureThreshold: 3
             timeoutSeconds: 5
