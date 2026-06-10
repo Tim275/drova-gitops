@@ -33,3 +33,12 @@ jobs:
             echo "::endgroup::"
           done
           exit $fail
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pipx install yamllint
+      - name: Lint YAML
+        run: yamllint -c .yamllint.yaml .
