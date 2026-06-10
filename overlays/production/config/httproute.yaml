@@ -75,6 +75,9 @@ spec:
             value: /trips
         - path:
             type: PathPrefix
+            value: /drivers
+        - path:
+            type: PathPrefix
             value: /ws/drivers
         - path:
             type: PathPrefix
