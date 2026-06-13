@@ -41,10 +41,6 @@ spec:
                   key: DB_URL
             - name: MIGRATIONS_PATH
               value: migrations
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65532
-        runAsGroup: 65532
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -152,12 +148,6 @@ spec:
                   key: APP_BASE_URL
             - name: HEALTH_ADDR
               value: ":8085"
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
           volumeMounts:
             - name: kafka-ca
               mountPath: "/etc/kafka-tls"
