@@ -29,15 +29,17 @@ spec:
             # plaintext comes from the SEED_PASSWORD Sealed Secret and never
             # touches git. psql ':'pw'' binding is injection-safe. ON CONFLICT
             # UPDATE rotates existing rows, so the public "Test1234!" stops
-            # working as soon as this runs. crypt('$2a$12$') is verifiable by
-            # Go's bcrypt at login.
+            # working as soon as this runs. password_hash is BYTEA, so crypt()'s
+            # text hash is convert_to('UTF8')'d — Go reads those bytes back as
+            # the $2a$ string and bcrypt-verifies at login. ON_ERROR_STOP=1 fails
+            # the Job loudly instead of a silent no-op on a SQL error.
             - |
-              psql "$DB_URL" -v pw="$SEED_PASSWORD" <<'ENDSQL'
+              psql "$DB_URL" -v ON_ERROR_STOP=1 -v pw="$SEED_PASSWORD" <<'ENDSQL'
               CREATE EXTENSION IF NOT EXISTS pgcrypto;
               INSERT INTO users (email, password_hash, role, is_activated, display_name, phone)
               VALUES
-                ('rider@drova.local',  crypt(:'pw', gen_salt('bf', 12)), 'rider',  true, 'Max Rider',     '+49 123 4567890'),
-                ('driver@drova.local', crypt(:'pw', gen_salt('bf', 12)), 'driver', true, 'Stefan Fahrer', '+49 987 6543210')
+                ('rider@drova.local',  convert_to(crypt(:'pw', gen_salt('bf', 12)), 'UTF8'), 'rider',  true, 'Max Rider',     '+49 123 4567890'),
+                ('driver@drova.local', convert_to(crypt(:'pw', gen_salt('bf', 12)), 'UTF8'), 'driver', true, 'Stefan Fahrer', '+49 987 6543210')
               ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash;
               ENDSQL
           env:
