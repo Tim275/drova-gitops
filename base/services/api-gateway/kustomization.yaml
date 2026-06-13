@@ -11,3 +11,5 @@ resources:
   - pdb.yaml
   # Plain Deployment (Fallback — auskommentiert):
   # - deployment.yaml
+components:
+  - ../../../components/go-service-baseline

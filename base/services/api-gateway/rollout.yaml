@@ -50,10 +50,6 @@ spec:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '8081'
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65532
-        runAsGroup: 65532
       volumes:
         - name: kafka-ca
           secret:
@@ -74,12 +70,6 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
           env:
             - name: HTTP_ADDR
               valueFrom:
