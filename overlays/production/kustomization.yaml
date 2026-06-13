@@ -13,6 +13,7 @@ resources:
   - sealed-secrets/sealed-secret-pg-drivers-creds.yaml
   - sealed-secrets/sealed-secret-redis.yaml
   - sealed-secrets/sealed-secret-dispatch-token.yaml
+  - sealed-secrets/sealed-secret-seed.yaml
   - jobs/seed-job.yaml
   - jobs/dispatch-prod-deployed.yaml
 images:

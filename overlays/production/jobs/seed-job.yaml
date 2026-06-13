@@ -25,17 +25,20 @@ spec:
           image: ghcr.io/cloudnative-pg/postgresql:16.4
           command: ["/bin/sh", "-c"]
           args:
+            # Password is bcrypt-hashed in-DB via pgcrypto (bf, cost 12) — the
+            # plaintext comes from the SEED_PASSWORD Sealed Secret and never
+            # touches git. psql ':'pw'' binding is injection-safe. ON CONFLICT
+            # UPDATE rotates existing rows, so the public "Test1234!" stops
+            # working as soon as this runs. crypt('$2a$12$') is verifiable by
+            # Go's bcrypt at login.
             - |
-              psql "$DB_URL" <<'ENDSQL'
+              psql "$DB_URL" -v pw="$SEED_PASSWORD" <<'ENDSQL'
+              CREATE EXTENSION IF NOT EXISTS pgcrypto;
               INSERT INTO users (email, password_hash, role, is_activated, display_name, phone)
               VALUES
-                ('rider@drova.local',
-                 '$2b$12$HlVWVw1rpO78kCRZ3IUU2.ubLeYQmd4mdo8wniTMZ3RTiZ69Pkrxq',
-                 'rider', true, 'Max Rider', '+49 123 4567890'),
-                ('driver@drova.local',
-                 '$2b$12$ZxwjgkAMOV8/9l2dG3vsquUGGzN7iKsTDXsngq4xnYSc36fA8Mcy.',
-                 'driver', true, 'Stefan Fahrer', '+49 987 6543210')
-              ON CONFLICT (email) DO NOTHING;
+                ('rider@drova.local',  crypt(:'pw', gen_salt('bf', 12)), 'rider',  true, 'Max Rider',     '+49 123 4567890'),
+                ('driver@drova.local', crypt(:'pw', gen_salt('bf', 12)), 'driver', true, 'Stefan Fahrer', '+49 987 6543210')
+              ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash;
               ENDSQL
           env:
             - name: DB_URL
@@ -43,6 +46,11 @@ spec:
                 secretKeyRef:
                   name: drova-pg-users-creds
                   key: DB_URL
+            - name: SEED_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drova-seed-secret
+                  key: SEED_PASSWORD
           resources:
             requests:
               cpu: 50m
