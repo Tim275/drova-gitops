@@ -18,26 +18,26 @@ resources:
   - jobs/dispatch-prod-deployed.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: v0.22.8
-    digest: sha256:7aff81142e2beb3b858dd35495c523413c15d082ce3dde57a029ce14d0d5ec4f
+    newTag: v0.22.10
+    digest: sha256:ae8fa3b8fac7d84af6a8475cd04c3164e3995267e1034834edc9e39688831be9
   - name: ghcr.io/tim275/drova/user-service
-    newTag: v0.22.8
-    digest: sha256:3f44a7ae459e946b262121dda353c03e2c73c34588d43d90168c6d1facf93711
+    newTag: v0.22.10
+    digest: sha256:d056aa7a21b6d1075c46f24ea0ae4f74fe1010ef34c1d1d64c04fce7ad9af159
   - name: ghcr.io/tim275/drova/trip-service
-    newTag: v0.22.8
-    digest: sha256:79d7876924b8eec2aaa8ce800468d41b028c193f7bb8bd761d93923e8e18880c
+    newTag: v0.22.10
+    digest: sha256:7db74ddbc9321ab43b7bc38dd62067dd0cec7c78b489422a3a3f184ee9b93d9f
   - name: ghcr.io/tim275/drova/driver-service
-    newTag: v0.22.8
-    digest: sha256:cbf2626fca036c589e9dc359e85be6f13d7613e1f50559875bc5311c8bdc9d91
+    newTag: v0.22.10
+    digest: sha256:ca4db625568e0928f88a8b136a45a6145eac1a64ae7afdb34f052af70a8904df
   - name: ghcr.io/tim275/drova/payment-service
-    newTag: v0.22.8
-    digest: sha256:736ce2f0268aceb4f0b14c70d01918de7113b4dd3f53dcf6374ee9d7356c23dd
+    newTag: v0.22.10
+    digest: sha256:b25ce809ebf5beeb6d459431a8e63192a92a520cf1320bb02ded4c18b17b4290
   - name: ghcr.io/tim275/drova/chat-service
-    newTag: v0.22.8
-    digest: sha256:3573f50ab3cc4f5bec6a15a6a836a6192c895b2b6c740dc57139867242526f41
+    newTag: v0.22.10
+    digest: sha256:7c4e80b2d0c5884c6270efc139d71423d7d67050b3aba87b499ba624c20583d4
   - name: ghcr.io/tim275/drova/frontend
-    newTag: v0.22.8
-    digest: sha256:b25c56ebaf1bbeeeed672aa21294726061707068d8513777770bb25ab7d19a47
+    newTag: v0.22.10
+    digest: sha256:b99fc5ff1811876e77d7b00eea70cdefaf4ab31c9bd3d5d0526bc1279492898d
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova
