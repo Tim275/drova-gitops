@@ -17,14 +17,13 @@ spec:
         scaleUp:
           stabilizationWindowSeconds: 30
   triggers:
-    # Kafka consumer-group lag via kube-prometheus-stack (Strimzi kafka-exporter).
-    # No SASL/TLS creds — reuses the existing Prometheus scrape. threshold = lag per replica.
+    # Kafka consumer-lag via Prometheus (kafka-exporter), threshold = Lag pro Replica
     - type: prometheus
       metadata:
         serverAddress: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: sum(kafka_consumergroup_lag{consumergroup=~"trip-service-.*"})
         threshold: "50"
-    # Keep the CPU signal the HPA had — KEDA scales on the max of both triggers.
+    # CPU-Signal wie vorher beim HPA — KEDA skaliert auf das Max beider Trigger
     - type: cpu
       metricType: Utilization
       metadata:

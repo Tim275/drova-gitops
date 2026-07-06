@@ -9,10 +9,7 @@ spec:
   args:
     - name: service-name
   metrics:
-    # Homelab-tuned: initialDelay 240s skips slow cold-start warmup, failureLimit 4
-    # tolerates transient histogram_quantile spikes during traffic shifts. Steady-state
-    # p99 is ~25ms and success ~100%, so these still guard real regressions — not
-    # deploy-time noise (which was aborting healthy canaries and stalling api-gateway).
+    # Homelab-tuned: initialDelay 240s (Cold-Start), failureLimit 4 (transiente Spikes)
     - name: success-rate
       initialDelay: 240s
       interval: 30s

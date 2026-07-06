@@ -1,8 +1,5 @@
 ---
-# REFERENZ: Plain Deployment für api-gateway (Fallback ohne Argo Rollouts).
-# Aktuell NICHT aktiv — rollout.yaml wird verwendet (canary via Argo Rollouts).
-# Um zurückzuwechseln: deployment.yaml in kustomization.yaml einkommentieren,
-# rollout.yaml + service-canary.yaml + service-stable.yaml + analysis-template.yaml auskommentieren.
+# Inaktiver Fallback ohne Argo Rollouts — Wechsel via kustomization.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

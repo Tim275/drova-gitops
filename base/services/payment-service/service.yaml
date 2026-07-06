@@ -1,5 +1,4 @@
-# payment-service: Kafka-only Worker, exposed nur Health- + Metrics-Port
-# (Andere Services konsumieren via Kafka, nicht via HTTP)
+# Kafka-only Worker — exposed nur den Health-Port
 apiVersion: v1
 kind: Service
 metadata:

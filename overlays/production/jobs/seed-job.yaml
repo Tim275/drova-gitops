@@ -25,14 +25,7 @@ spec:
           image: ghcr.io/cloudnative-pg/postgresql:16.4
           command: ["/bin/sh", "-c"]
           args:
-            # Password is bcrypt-hashed in-DB via pgcrypto (bf, cost 12) — the
-            # plaintext comes from the SEED_PASSWORD Sealed Secret and never
-            # touches git. psql ':'pw'' binding is injection-safe. ON CONFLICT
-            # UPDATE rotates existing rows, so the public "Test1234!" stops
-            # working as soon as this runs. password_hash is BYTEA, so crypt()'s
-            # text hash is convert_to('UTF8')'d — Go reads those bytes back as
-            # the $2a$ string and bcrypt-verifies at login. ON_ERROR_STOP=1 fails
-            # the Job loudly instead of a silent no-op on a SQL error.
+            # Passwort aus dem SEED_PASSWORD Sealed Secret, bcrypt via pgcrypto
             - |
               psql "$DB_URL" -v ON_ERROR_STOP=1 -v pw="$SEED_PASSWORD" <<'ENDSQL'
               CREATE EXTENSION IF NOT EXISTS pgcrypto;

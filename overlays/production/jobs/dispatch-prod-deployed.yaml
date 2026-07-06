@@ -1,7 +1,4 @@
-## After ArgoCD finishes syncing production, POST a repository_dispatch event
-## to drova so prod-verify.yaml workflow auto-runs (health-poll + auto-rollback).
-##
-## Closes the "manual-only" gap: production deploys now self-verify.
+# PostSync: repository_dispatch an drova → prod-verify (Health-Poll + Auto-Rollback)
 apiVersion: batch/v1
 kind: Job
 metadata:
