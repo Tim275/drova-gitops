@@ -1,4 +1,3 @@
-# Lenient yamllint config for a Kustomize GitOps repo.
 # Sealed secrets carry one huge encrypted line -> ignored.
 extends: relaxed
 

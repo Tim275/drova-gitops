@@ -7,7 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: trip-service
-  minReplicaCount: 2    # HA floor — never scale below 2
+  minReplicaCount: 2    # HA floor
   maxReplicaCount: 15
   advanced:
     horizontalPodAutoscalerConfig:
@@ -23,7 +23,7 @@ spec:
         serverAddress: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         query: sum(kafka_consumergroup_lag{consumergroup=~"trip-service-.*"})
         threshold: "50"
-    # CPU-Signal wie vorher beim HPA — KEDA skaliert auf das Max beider Trigger
+    # KEDA skaliert auf das Max beider Trigger
     - type: cpu
       metricType: Utilization
       metadata:

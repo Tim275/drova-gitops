@@ -9,7 +9,7 @@ resources:
   - service-stable.yaml
   - hpa.yaml
   - pdb.yaml
-  # Plain Deployment (Fallback — auskommentiert):
+  # Plain Deployment (Fallback):
   # - deployment.yaml
 components:
   - ../../../components/go-service-baseline
