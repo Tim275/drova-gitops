@@ -3,6 +3,49 @@ kind: HTTPRoute
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
+  name: drova-login
+  namespace: drova-staging
+spec:
+  parentRefs:
+    - name: envoy-gateway
+      namespace: envoy-gateway
+      sectionName: https
+  hostnames:
+    - "staging.drova.timourhomelab.org"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /v1/users/login
+        - path:
+            type: PathPrefix
+            value: /v1/users/register
+        - path:
+            type: PathPrefix
+            value: /v1/auth
+      filters:
+        - type: ResponseHeaderModifier
+          responseHeaderModifier:
+            add:
+              - name: X-Frame-Options
+                value: DENY
+              - name: X-Content-Type-Options
+                value: nosniff
+              - name: Strict-Transport-Security
+                value: "max-age=31536000; includeSubDomains"
+              - name: X-XSS-Protection
+                value: "1; mode=block"
+              - name: Referrer-Policy
+                value: strict-origin-when-cross-origin
+      backendRefs:
+        - name: api-gateway-stable
+          port: 8081
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
   name: drova-api
   namespace: drova-staging
 spec:

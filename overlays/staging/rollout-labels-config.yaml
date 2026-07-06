@@ -1,0 +1,5 @@
+# kustomize kennt den Rollout-Template-Pfad nicht — hier nachgerüstet
+commonLabels:
+  - kind: Rollout
+    path: spec/template/metadata/labels
+    create: true

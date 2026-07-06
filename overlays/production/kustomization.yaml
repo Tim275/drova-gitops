@@ -43,3 +43,5 @@ commonLabels:
   app.kubernetes.io/part-of: drova
   environment: production
   team: timour
+configurations:
+  - rollout-labels-config.yaml
