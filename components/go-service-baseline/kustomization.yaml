@@ -25,12 +25,14 @@ patches:
         value:
           - maxSkew: 1
             topologyKey: topology.kubernetes.io/zone
-            whenUnsatisfiable: ScheduleAnyway
+            whenUnsatisfiable: DoNotSchedule
+            nodeTaintsPolicy: Honor
             labelSelector:
               matchLabels:
                 app.kubernetes.io/part-of: drova
             matchLabelKeys:
               - app
+              - pod-template-hash
       - op: add
         path: /spec/template/spec/priorityClassName
         value: app-standard
@@ -58,12 +60,14 @@ patches:
         value:
           - maxSkew: 1
             topologyKey: topology.kubernetes.io/zone
-            whenUnsatisfiable: ScheduleAnyway
+            whenUnsatisfiable: DoNotSchedule
+            nodeTaintsPolicy: Honor
             labelSelector:
               matchLabels:
                 app.kubernetes.io/part-of: drova
             matchLabelKeys:
               - app
+              - rollouts-pod-template-hash
       - op: add
         path: /spec/template/spec/priorityClassName
         value: app-standard
