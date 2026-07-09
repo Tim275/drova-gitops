@@ -31,6 +31,9 @@ patches:
                 app.kubernetes.io/part-of: drova
             matchLabelKeys:
               - app
+      - op: add
+        path: /spec/template/spec/priorityClassName
+        value: app-standard
   - target:
       kind: Rollout
     patch: |-
@@ -61,3 +64,6 @@ patches:
                 app.kubernetes.io/part-of: drova
             matchLabelKeys:
               - app
+      - op: add
+        path: /spec/template/spec/priorityClassName
+        value: app-standard

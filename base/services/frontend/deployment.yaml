@@ -30,6 +30,7 @@ spec:
           labelSelector:
             matchLabels:
               app: frontend
+      priorityClassName: app-standard
       securityContext:
         runAsNonRoot: true
         runAsUser: 101
