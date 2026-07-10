@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: payment-service
   labels:
+    istio.io/use-waypoint: waypoint
+  labels:
     app: payment-service
 spec:
   selector:
