@@ -5,6 +5,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway-stable
+  labels:
+    istio.io/use-waypoint: waypoint
 spec:
   selector:
     app: api-gateway
