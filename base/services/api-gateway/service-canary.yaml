@@ -6,7 +6,6 @@ metadata:
     argocd.argoproj.io/sync-wave: '3'
   name: api-gateway-canary
   labels:
-    istio.io/use-waypoint: waypoint
 spec:
   selector:
     app: api-gateway
