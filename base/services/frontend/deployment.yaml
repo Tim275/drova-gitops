@@ -25,8 +25,8 @@ spec:
                     app: frontend
       topologySpreadConstraints:
         - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
           nodeTaintsPolicy: Honor
           labelSelector:
             matchLabels:
