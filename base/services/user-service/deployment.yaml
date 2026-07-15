@@ -153,14 +153,14 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             failureThreshold: 24
-            timeoutSeconds: 3
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: "/v1/readyz"
               port: 8082
             periodSeconds: 5
             failureThreshold: 3
-            timeoutSeconds: 3
+            timeoutSeconds: 5
           livenessProbe:
             httpGet:
               path: "/v1/health"
