@@ -37,7 +37,12 @@ images:
 commonLabels:
   app.kubernetes.io/name: drova
   app.kubernetes.io/part-of: drova
-  environment: staging
-  team: timour
+# environment/team gehören NICHT in Selektoren (die sind immutable) —
+# nur als Metadaten-Labels (includeSelectors:false lässt Selektoren unberührt):
+labels:
+  - pairs:
+      environment: staging
+      team: timour
+    includeSelectors: false
 configurations:
   - rollout-labels-config.yaml
