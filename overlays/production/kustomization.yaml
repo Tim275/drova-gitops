@@ -16,6 +16,20 @@ resources:
   - sealed-secrets/sealed-secret-seed.yaml
   - jobs/seed-job.yaml
   - jobs/dispatch-prod-deployed.yaml
+# Kopiert den (tag-transformierten) api-gateway-Image-Ref in die DEPLOY_IMAGE-Env
+# des PostSync-Dispatch-Jobs. So kennt prod-verify den exakt deployten Tag und
+# kann im Fehlerfall genau den passenden gitops-Commit reverten (statt blind HEAD).
+replacements:
+  - source:
+      kind: Rollout
+      name: api-gateway
+      fieldPath: spec.template.spec.containers.[name=api-gateway].image
+    targets:
+      - select:
+          kind: Job
+          name: drova-dispatch-prod-deployed
+        fieldPaths:
+          - spec.template.spec.containers.[name=dispatch].env.[name=DEPLOY_IMAGE].value
 images:
   - name: ghcr.io/tim275/drova/api-gateway
     newTag: v0.22.12
