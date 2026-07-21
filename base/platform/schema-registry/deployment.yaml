@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: '1'
   name: schema-registry
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: schema-registry
