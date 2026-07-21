@@ -1,5 +1,28 @@
 # Default owners — every PR requires review by:
 * @Tim275
 
+# ── Product-team ownership (Team-Topologies; solo-operated, all owners = @Tim275) ──
+
+# Rides — trip + driver
+/base/services/trip-service/ @Tim275
+/base/services/driver-service/ @Tim275
+
+# Payments
+/base/services/payment-service/ @Tim275
+
+# Growth — user + frontend
+/base/services/user-service/ @Tim275
+/base/services/frontend/ @Tim275
+
+# Comms — chat
+/base/services/chat-service/ @Tim275
+
+# Edge — api-gateway (canary/rollout config lives here!)
+/base/services/api-gateway/ @Tim275
+
+# Platform — shared baseline + schema-registry
+/base/platform/ @Tim275
+/components/ @Tim275
+
 # Production overlay is change-gated:
 /overlays/production/ @Tim275
