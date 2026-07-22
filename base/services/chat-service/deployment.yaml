@@ -14,6 +14,8 @@ spec:
       labels:
         app: chat-service
     spec:
+      serviceAccountName: chat-service
+      automountServiceAccountToken: false
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

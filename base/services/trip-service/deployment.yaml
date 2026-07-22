@@ -14,6 +14,8 @@ spec:
       labels:
         app: trip-service
     spec:
+      serviceAccountName: trip-service
+      automountServiceAccountToken: false
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
