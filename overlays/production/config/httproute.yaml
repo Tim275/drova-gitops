@@ -117,6 +117,12 @@ kind: HTTPRoute
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/pod-selector: "app=frontend"
+    gethomepage.dev/name: Drova
+    gethomepage.dev/description: 🌍 Ride-Hailing Microservices (Public via Cloudflare)
+    gethomepage.dev/group: Apps
+    gethomepage.dev/icon: https://github.com/Tim275.png
   name: drova-frontend
   namespace: drova
 spec:
