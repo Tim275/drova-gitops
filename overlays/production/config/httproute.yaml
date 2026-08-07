@@ -122,7 +122,7 @@ metadata:
     gethomepage.dev/name: Drova
     gethomepage.dev/description: 🌍 Ride-Hailing Microservices (Public via Cloudflare)
     gethomepage.dev/group: Apps
-    gethomepage.dev/icon: https://github.com/Tim275.png
+    gethomepage.dev/icon: mdi-alpha-d-circle
   name: drova-frontend
   namespace: drova
 spec:
