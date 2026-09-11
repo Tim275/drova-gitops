@@ -14,25 +14,25 @@ resources:
   - sealed-secrets/sealed-secret-redis.yaml
 images:
   - name: ghcr.io/tim275/drova/api-gateway
-    newTag: v0.24.0
-    digest: sha256:3a31cb51e0a62d5221b9722108978bdfce965c515bb246360362e70521cbde21
+    newTag: v0.24.1
+    digest: sha256:a2f5c5b44199bcba0f58acf5d44384632737461d9956fe3075aa8158ca7faca0
   - name: ghcr.io/tim275/drova/user-service
-    newTag: v0.24.0
-    digest: sha256:d0255ccbd5f27eda3483222c639af96233d7ae5929e7b7d4c6fb9ff6cbf23f66
+    newTag: v0.24.1
+    digest: sha256:04aaf6fce81a9a802f8bbe04a711eb802b35fe15831041f597744ded1f6f0b72
   - name: ghcr.io/tim275/drova/trip-service
-    newTag: v0.24.0
-    digest: sha256:df4a435b786365059a8e8a56e41360df59636bbd015a53632086803be0fd4c5b
+    newTag: v0.24.1
+    digest: sha256:4776ba3269766fcdb6fe25f30143b28b3a9cc325df9989f729c063c7cc09b252
   - name: ghcr.io/tim275/drova/driver-service
-    newTag: v0.24.0
-    digest: sha256:8358c2e0e7df50431ebbd8cbd69f12de30ab54967459fff1be724ffc7e728c9c
+    newTag: v0.24.1
+    digest: sha256:a06ee9dc2cfb0b2fdc1f7baf3064d547f054ee0ee69311ce111575575ac204b8
   - name: ghcr.io/tim275/drova/payment-service
-    newTag: v0.24.0
-    digest: sha256:acbab17f595e80745a832cf9c2792a6fdb05a908909052870994648050467797
+    newTag: v0.24.1
+    digest: sha256:21381252b5a63c8e17deae72c13115e78085129a3c7743e4bf4faaa2f3f4a944
   - name: ghcr.io/tim275/drova/chat-service
-    newTag: v0.24.0
-    digest: sha256:30d5c7ec5f4b1faf517ee169720fb5244b1da28da063109d374e236d2e9a40a8
+    newTag: v0.24.1
+    digest: sha256:9a8b01cfa085b74aa6857732d5532ab723652a50bc2ee660547dea5c95e37c25
   - name: ghcr.io/tim275/drova/frontend
-    newTag: v0.24.0
+    newTag: v0.24.1
     digest: sha256:6734457841acdd24021be89c22f5ae12bb148f220d49d1770638a055367c5f09
 commonLabels:
   app.kubernetes.io/name: drova
