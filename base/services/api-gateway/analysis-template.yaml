@@ -13,7 +13,7 @@ spec:
     - name: success-rate
       initialDelay: 240s
       interval: 30s
-      count: 5
+      count: 5 # alternativ 10
       successCondition: "len(result) > 0 && result[0] >= 0.99"
       failureCondition: "len(result) > 0 && result[0] < 0.95"
       failureLimit: 4
@@ -37,7 +37,7 @@ spec:
     - name: p99-latency
       initialDelay: 240s
       interval: 30s
-      count: 5
+      count: 5 # alternativ 10
       successCondition: "len(result) > 0 && result[0] < 1.5"
       failureCondition: "len(result) > 0 && result[0] >= 2.5"
       failureLimit: 4
