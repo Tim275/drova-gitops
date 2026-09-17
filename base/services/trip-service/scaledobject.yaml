@@ -7,7 +7,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: trip-service
-  minReplicaCount: 2    # HA floor
+  minReplicaCount: 1
   maxReplicaCount: 15
   advanced:
     horizontalPodAutoscalerConfig:
