@@ -1,3 +1,38 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "timezone": "Europe/Berlin",
+  "automerge": false,
+  "platformAutomerge": false,
+  "configMigration": true,
+  "semanticCommits": "enabled",
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "🔄 Renovate Dashboard",
+  "dependencyDashboardLabels": ["renovate"],
+  "labels": ["renovate"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 3,
+  "major": { "dependencyDashboardApproval": true },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["renovate", "security"],
+    "minimumReleaseAge": "0 days"
+  },
+  "packageRules": [
+    {
+      "description": "patch (2d soak)",
+      "matchUpdateTypes": ["patch", "digest"],
+      "minimumReleaseAge": "2 days"
+    },
+    {
+      "description": "minor (5d soak)",
+      "matchUpdateTypes": ["minor"],
+      "minimumReleaseAge": "5 days"
+    },
+    {
+      "description": "major (7d soak)",
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "7 days"
+    }
+  ]
 }
