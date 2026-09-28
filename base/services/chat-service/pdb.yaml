@@ -3,7 +3,7 @@ kind: PodDisruptionBudget
 metadata:
   name: chat-service
 spec:
-  minAvailable: 1
+  maxUnavailable: 1
   selector:
     matchLabels:
       app: chat-service
