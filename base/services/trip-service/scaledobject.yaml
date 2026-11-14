@@ -1,6 +1,8 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '4'
   name: trip-service
 spec:
   scaleTargetRef:
