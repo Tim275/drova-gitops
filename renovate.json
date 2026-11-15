@@ -6,9 +6,11 @@
   "platformAutomerge": false,
   "configMigration": true,
   "semanticCommits": "enabled",
-  "dependencyDashboard": true,
-  "dependencyDashboardTitle": "🔄 Renovate Dashboard",
-  "dependencyDashboardLabels": ["renovate"],
+  "dependencyDashboard": {
+    "enabled": true,
+    "title": "🔄 Renovate Dashboard",
+    "labels": ["renovate"]
+  },
   "labels": ["renovate"],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 3,
