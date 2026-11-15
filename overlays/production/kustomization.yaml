@@ -6,11 +6,7 @@ resources:
   - config/app-config.yaml
   - config/httproute.yaml
   - sealed-secrets/sealed-secret-app.yaml
-  - sealed-secrets/sealed-secret-pg-app-creds.yaml
-  - sealed-secrets/sealed-secret-pg-users-creds.yaml
-  - sealed-secrets/sealed-secret-pg-trips-creds.yaml
-  - sealed-secrets/sealed-secret-pg-payments-creds.yaml
-  - sealed-secrets/sealed-secret-pg-drivers-creds.yaml
+  - external-secrets/pg-creds.yaml
   - sealed-secrets/sealed-secret-redis.yaml
   - sealed-secrets/sealed-secret-dispatch-token.yaml
   - sealed-secrets/sealed-secret-seed.yaml

@@ -1,0 +1,87 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: drova-pg-users-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: openbao
+    kind: ClusterSecretStore
+  target:
+    name: drova-pg-users-creds
+    template:
+      engineVersion: v2
+      data:
+        DB_URL: 'postgresql://drova_admin:{{ .password }}@postgres-rw.postgres.svc.cluster.local:5432/drova_users?sslmode=disable'
+        POOL_URL: 'postgresql://drova_admin:{{ .password }}@postgres-pooler.postgres.svc.cluster.local:5432/drova_users?sslmode=disable'
+  data:
+    - secretKey: password
+      remoteRef:
+        key: drova/drova-postgres-admin
+        property: password
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: drova-pg-trips-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: openbao
+    kind: ClusterSecretStore
+  target:
+    name: drova-pg-trips-creds
+    template:
+      engineVersion: v2
+      data:
+        DB_URL: 'postgresql://drova_admin:{{ .password }}@postgres-rw.postgres.svc.cluster.local:5432/drova_trips?sslmode=disable'
+        POOL_URL: 'postgresql://drova_admin:{{ .password }}@postgres-pooler.postgres.svc.cluster.local:5432/drova_trips?sslmode=disable'
+  data:
+    - secretKey: password
+      remoteRef:
+        key: drova/drova-postgres-admin
+        property: password
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: drova-pg-payments-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: openbao
+    kind: ClusterSecretStore
+  target:
+    name: drova-pg-payments-creds
+    template:
+      engineVersion: v2
+      data:
+        DB_URL: 'postgresql://drova_admin:{{ .password }}@postgres-rw.postgres.svc.cluster.local:5432/drova_payments?sslmode=disable'
+        POOL_URL: 'postgresql://drova_admin:{{ .password }}@postgres-pooler.postgres.svc.cluster.local:5432/drova_payments?sslmode=disable'
+  data:
+    - secretKey: password
+      remoteRef:
+        key: drova/drova-postgres-admin
+        property: password
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: drova-pg-drivers-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: openbao
+    kind: ClusterSecretStore
+  target:
+    name: drova-pg-drivers-creds
+    template:
+      engineVersion: v2
+      data:
+        DB_URL: 'postgresql://drova_admin:{{ .password }}@postgres-rw.postgres.svc.cluster.local:5432/drova_drivers?sslmode=disable'
+        POOL_URL: 'postgresql://drova_admin:{{ .password }}@postgres-pooler.postgres.svc.cluster.local:5432/drova_drivers?sslmode=disable'
+  data:
+    - secretKey: password
+      remoteRef:
+        key: drova/drova-postgres-admin
+        property: password
