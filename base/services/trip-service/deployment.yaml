@@ -34,7 +34,7 @@ spec:
                 path: ca.crt
       initContainers:
         - name: migrate
-          image: ghcr.io/tim275/drova/trip-service:latest
+          image: harbor.timourhomelab.org/drova/trip-service:latest
           command:
             - "/app/trip-service"
             - migrate
@@ -61,7 +61,7 @@ spec:
               value: migrations
       containers:
         - name: trip-service
-          image: ghcr.io/tim275/drova/trip-service:latest
+          image: harbor.timourhomelab.org/drova/trip-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9093

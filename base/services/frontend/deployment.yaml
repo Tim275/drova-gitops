@@ -44,7 +44,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: frontend
-          image: ghcr.io/tim275/drova/frontend:latest
+          image: harbor.timourhomelab.org/drova/frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

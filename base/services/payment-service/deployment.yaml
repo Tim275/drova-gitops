@@ -18,7 +18,7 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: migrate
-          image: ghcr.io/tim275/drova/payment-service:latest
+          image: harbor.timourhomelab.org/drova/payment-service:latest
           command:
             - "/app/payment-service"
             - migrate
@@ -61,7 +61,7 @@ spec:
                 path: ca.crt
       containers:
         - name: payment-service
-          image: ghcr.io/tim275/drova/payment-service:latest
+          image: harbor.timourhomelab.org/drova/payment-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8085

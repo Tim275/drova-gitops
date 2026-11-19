@@ -18,7 +18,7 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: migrate
-          image: ghcr.io/tim275/drova/user-service:latest
+          image: harbor.timourhomelab.org/drova/user-service:latest
           command:
             - "/app/user-service"
             - migrate
@@ -54,7 +54,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: user-service
-          image: ghcr.io/tim275/drova/user-service:latest
+          image: harbor.timourhomelab.org/drova/user-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8082

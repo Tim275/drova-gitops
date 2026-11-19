@@ -27,7 +27,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: chat-service
-          image: ghcr.io/tim275/drova/chat-service:latest
+          image: harbor.timourhomelab.org/drova/chat-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8084

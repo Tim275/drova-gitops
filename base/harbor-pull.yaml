@@ -1,0 +1,26 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: harbor-pull
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: openbao
+    kind: ClusterSecretStore
+  target:
+    name: harbor-pull
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    template:
+      type: kubernetes.io/dockerconfigjson
+      engineVersion: v2
+      mergePolicy: Replace
+      data:
+        .dockerconfigjson: |
+          {"auths":{"harbor.timourhomelab.org":{"username":"{{ .username }}","password":"{{ .password }}"}}}
+  dataFrom:
+    - extract:
+        key: harbor/robot-drova-pull

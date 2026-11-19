@@ -34,7 +34,7 @@ spec:
                 path: ca.crt
       containers:
         - name: driver-service
-          image: ghcr.io/tim275/drova/driver-service:latest
+          image: harbor.timourhomelab.org/drova/driver-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9092
