@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - harbor-pull.yaml
   - platform/schema-registry
   - services/api-gateway
   - services/user-service
@@ -10,3 +11,12 @@ resources:
   - services/payment-service
   - services/chat-service
   - services/frontend
+
+patches:
+  - target:
+      kind: ServiceAccount
+    patch: |-
+      - op: add
+        path: /imagePullSecrets
+        value:
+          - name: harbor-pull

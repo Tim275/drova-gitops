@@ -34,7 +34,7 @@ spec:
                 path: ca.crt
       containers:
         - name: api-gateway
-          image: ghcr.io/tim275/drova/api-gateway:latest
+          image: harbor.timourhomelab.org/drova/api-gateway:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
