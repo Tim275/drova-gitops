@@ -8,7 +8,7 @@ metadata:
 spec:
   refreshInterval: 5m
   secretStoreRef:
-    name: openbao
+    name: openbao-tenants
     kind: ClusterSecretStore
   target:
     name: harbor-pull
@@ -23,4 +23,4 @@ spec:
           {"auths":{"harbor.timourhomelab.org":{"username":"{{ .username }}","password":"{{ .password }}"}}}
   dataFrom:
     - extract:
-        key: harbor/robot-drova-pull
+        key: tenants/drova/harbor-robot-pull
